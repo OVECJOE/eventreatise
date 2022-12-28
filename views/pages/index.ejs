@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', {title: 'Homepage'}); %>
+  <body class="bg-fuchsia-100/10">
+    <%- include('../partials/header') %>
+    <main class="flex flex-col gap-2 pt-8 font-serif">
+      <section>
+        <article class="flex flex-col pt-5 pb-3 gap-2 text-center w-90">
+          <h1 class="text-3xl md:text-4xl py-2 font-spray text-[#227791]">
+            Book Your Dream
+            <span
+              class="bg-[url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg')] bg-no-repeat bg-contain bg-bottom"
+              >Event Space</span
+            >.<br />
+            Eliminate Risks. Reduce Stress.
+          </h1>
+          <p class="pb-2 text-[#2a5c56] text-xl md:text-2xl max-w-4xl m-auto">
+            An online marketplace focused on renting and booking event centres
+            for occasions with the focus of making events successful and more
+            predictable. Registration & booking, administering event venues,
+            venue reviews, and more.
+          </p>
+          <a
+            href="/signup"
+            class="mt-4 px-10 py-3 bg-[#dfb253]/80 rounded-full self-center font-bold text-[#227791] hover:bg-[#dfb253]/100 hover:text-white transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
+          >
+            Get Started
+          </a>
+        </article>
+        <img
+          src="assets/Organizing-projects.svg"
+          alt="Organizing Events Venues into Listings"
+          class="mx-auto"
+        />
+      </section>
+      <section class="text-center bg-[#d8deca]/40 pt-4">
+        <h5 class="text-[#98bd75] font-sans font-medium text-xl py-2">
+          WHY
+          <span
+            class="bg-[url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg')] bg-no-repeat bg-contain bg-bottom"
+            >EVENTREATISE</span
+          >
+        </h5>
+        <h3 class="text-[#227791] font-spray text-2xl pt-4">
+          Don't take our word for it
+        </h3>
+        <p
+          class="pb-2 text-[#2a5c56] text-xl md:text-2xl px-2 max-w-4xl m-auto"
+        >
+          Eventreatise doesn't just help you book an event space, we ensure that
+          you rent or book an event space that is from an authentic source with
+          high degree of transparency.
+        </p>
+        <div
+          class="mt-5 flex flex-col gap-3 md:gap-0 border-0 md:border-t-2 border-t-[#98bd75] md:grid md:grid-cols-3 mx-1 font-serif"
+        >
+          <article
+            class="border-0 md:border-r-2 border-r-[#98bd75] px-2 py-3 flex flex-col gap-3 justify-center"
+          >
+            <h2 class="text-4xl font-rubik text-[#dfb253]">98%</h2>
+            <h5 class="font-bold text-[#227791]">TRANSPARENCY ALL THE WAY</h5>
+            <p class="text-[#2a5c56] text-lg">
+              Experience a level of transparency that bring you closer to us.
+            </p>
+          </article>
+          <article class="px-2 py-3 flex flex-col gap-3 justify-center">
+            <h2 class="text-4xl font-rubik text-[#dfb253]">100%</h2>
+            <h5 class="font-bold text-[#227791]">
+              STRESS-FREE WITHOUT ANY HITCHES
+            </h5>
+            <p class="text-[#2a5c56] text-lg">
+              Unleash the power of automation and book a space from the comfort
+              of your home.
+            </p>
+          </article>
+          <article
+            class="border-0 md:border-l-2 border-l-[#98bd75] px-2 py-3 flex flex-col gap-3 justify-center"
+          >
+            <h2 class="text-4xl font-rubik text-[#dfb253]">2X</h2>
+            <h5 class="font-bold text-[#227791]">INCREASE YOUR REVENUE</h5>
+            <p class="text-[#2a5c56] text-lg">
+              Post your event space listings and generate more revenue with ease
+              and peace.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section
+        class="flex gap-2 text-center md:text-start flex-col-reverse md:flex-row justify-center items-center bg-[#dfb253] text-white py-3"
+      >
+        <img
+          src="assets/security.png"
+          alt="This Platform has a Secure Registration"
+          class="w-full md:w-7/12"
+        />
+        <article class="flex flex-col gap-3">
+          <h2 class="text-2xl font-mono">Secure Registration</h2>
+          <p
+            class="text-xl font-serif leading-7 text-[#2a5c56] bg-[#dfb253] p-2"
+          >
+            Your login and signup details are secure and encypted. We gurantee
+            you full security protection inasmuch as you do not compromise your
+            privacy.
+          </p>
+        </article>
+      </section>
+    </main>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

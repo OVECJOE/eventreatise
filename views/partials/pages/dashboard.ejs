@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', { title: 'Dashboard' }) %>
+  <body class="flex relative bg-fuchsia-500/5 overflow-hidden">
+    <%- include('../partials/err_toast') %> 
+    <%- include('../partials/side_menu') %>
+    <main
+      class="flex flex-col gap-5 grow h-screen px-5 py-8 md:p-10 max-w-5xl mx-auto overflow-y-auto"
+    >
+      <h1 class="text-3xl md:text-5xl font-spray text-[#227791] w-full">
+        Welcome Aboard,<br />
+        <span
+          class="font-rubik bg-[url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg')] bg-no-repeat bg-contain bg-bottom"
+          ><%= user.fullName %></span
+        >
+      </h1>
+      <div class="flex gap-5 justify-end items-center text-[#a05231]">
+        <hr class="inline h-1 bg-[#2a5c56]/30 rounded-full grow" />
+        <div class="relative bg-white p-1">
+          <a href="/dashboard/notifications" class="flex gap-2 items-center">
+            <img src="/assets/notifications.png" alt="" />
+          </a>
+          <span class="absolute -top-1 -right-1 text-xs font-sans font-semibold"
+            >0</span
+          >
+        </div>
+        <div class="relative bg-white p-1">
+          <a href="/dashboard/cart" class="flex gap-2 items-center">
+            <img src="/assets/cart.png" alt="" />
+          </a>
+          <span class="absolute -top-1 -right-1 text-xs font-sans font-semibold"
+            >0</span
+          >
+        </div>
+        <div class="relative bg-white p-1">
+          <a href="/dashboard/marketplace" class="flex gap-2 items-center">
+            <img src="/assets/marketplace.png" alt="" />
+          </a>
+          <span class="absolute -top-1 -right-1 text-xs font-sans font-semibold"
+            >0</span
+          >
+        </div>
+      </div>
+      <section class="py-2 flex flex-col items-center gap-5 rounded-md w-full">
+        <article
+          class="flex sm:flex-row py-1 px-2 sm:p-4 gap-1 rounded-lg from-[#a05231]/60 to-[#227791] sm:to-[#d6e3e6]/80 bg-gradient-to-tl justify-between w-full"
+        >
+          <div class="flex flex-col justify-between grow gap-2">
+            <h2
+              class="text-3xl py-2 sm:text-4xl text-[#dfb253] sm:text-black font-rubik"
+            >
+              Following
+            </h2>
+            <span
+              class="text-right sm:text-start text-5xl text-white sm:text-[#72581f] font-spray font-medium"
+              ><%= followingCount %> </span
+            >
+          </div>
+          <img
+            src="/assets/following.png"
+            class="hidden sm:inline w-44 sm:self-end"
+          />
+        </article>
+        <article
+          class="flex sm:flex-row py-1 px-2 sm:p-4 gap-1 rounded-lg to-[#2f2e41] from-[#227791] bg-gradient-to-tl justify-between w-full"
+        >
+          <div class="flex flex-col justify-between grow gap-2">
+            <h2 class="text-3xl py-2 sm:text-4xl text-[#dfb253] font-rubik">
+              Available Spaces
+            </h2>
+            <span
+              class="text-right sm:text-start text-5xl text-white font-spray font-medium"
+              ><%= availableSpaces %> </span
+            >
+          </div>
+          <img
+            src="/assets/available_spaces.png"
+            class="hidden sm:inline w-44 sm:self-end"
+          />
+        </article>
+      </section>
+      <hr />
+      <a
+        href="/logout"
+        class="bg-[#a05231] text-2xl font-mono text-[#dfb253] rounded-xl shadow-md shadow-[#227791] text-center self-center py-2 px-5"
+        >Logout</a
+      >
+    </main>
+  </body>
+</html>

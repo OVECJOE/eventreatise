@@ -1,0 +1,13 @@
+<% if (locals.errmsg) { %>
+<div
+  class="absolute top-1 left-0 border-l-2 border-r-2 max-w-6xl m-auto border-red-500 right-0 p-3 text-red-500 bg-yellow-100"
+  id="error-card"
+>
+  <span class="font-serif font-semibold"><%= locals.errmsg %></span>
+  <button
+    class="absolute font-rubik right-1 top-1 bottom-1 cursor-pointer text-4xl"
+  >
+    &times;
+  </button>
+</div>
+<% } %>
