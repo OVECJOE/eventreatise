@@ -36,6 +36,14 @@ const SpaceLocation = Schema({
     required: [true, 'Event space address is required!'],
     trim: true
   }
+}, {
+  virtuals: {
+    location: {
+      get() {
+        return `${this.city}, ${this.state}, ${this.country}`
+      }
+    }
+  }
 })
 
 module.exports = mongoose.model('SpaceLocation', SpaceLocation)

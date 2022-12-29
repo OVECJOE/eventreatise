@@ -46,8 +46,6 @@ exports.view_marketplace = async (req, res) => {
     ...message
   }
 
-  console.log(context.user)
-
   try {
     // filter by category
     const filter = (category && category !== 'all') ? {
@@ -65,8 +63,6 @@ exports.view_marketplace = async (req, res) => {
       }).exec()
 
     context.categories = spaceCategories
-
-    console.log(spaceCategories)
   } catch (err) {
     message.errmsg = err.message
     return res.redirect('/dashboard/marketplace')
@@ -87,7 +83,11 @@ exports.view_my_spaces = async (req, res) => {
 
   if (user?.isManager) {
     try {
-      const eventSpaces = await EventSpace.find({ manager: user._id })
+      // get the manager details
+      const manager = await Manager.findOne({ user: user._id })
+      // get the event spaces for the given manager id
+      const eventSpaces = await EventSpace.find({ manager: manager._id })
+        .select(['-photos', '-desc'])
         .populate(['manager', 'location', 'category']).exec()
 
       context.spaces = eventSpaces
@@ -184,7 +184,6 @@ exports.create_space = async (req, res) => {
       photos: [], // list of photos of event spaces
       name, desc,
       category: category.replace(' ', ''),
-      manager: user._id
     }
 
     try {
@@ -232,13 +231,13 @@ exports.create_space = async (req, res) => {
       }
 
       // get manager info
-      const manager = await Manager.findOneAndUpdate({ _id: user._id }, {
+      const manager = await Manager.findOneAndUpdate({ user: user._id }, {
         $addToSet: { eventSpaces: space._id }
       }, { new: true })
 
-      console.log(manager)
-      
-      await SpaceCategory.updateOne({_id: space.category._id}, {
+      space.manager = manager._id
+
+      await SpaceCategory.updateOne({ _id: space.category._id }, {
         $addToSet: { eventSpaces: space._id },
       }, { new: true })
 

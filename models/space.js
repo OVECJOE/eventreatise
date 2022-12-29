@@ -1,6 +1,5 @@
 // dependencies
 const mongoose = require('mongoose')
-// const {} = require('validator')
 
 const Schema = mongoose.Schema
 const { ObjectId } = Schema.Types
@@ -39,6 +38,11 @@ const EventSpace = Schema({
   maxCapacity: { type: Number, default: 0 }, // maximum number of people it can house.
   // Additional info about an event space goes to EventSpaceInfo
   moreInfo: { type: ObjectId, ref: 'EventSpaceInfo' }
+}, {
+  timestamps: {
+    'createdAt': 'postedOn',
+    'updatedAt': 'editedOn'
+  }
 })
 
 module.exports = mongoose.model('EventSpace', EventSpace)

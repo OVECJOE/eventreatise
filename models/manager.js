@@ -25,6 +25,6 @@ const Manager = new Schema({
   followers: [
     { type: ObjectId, ref: 'User' }
   ]
-})
+}, { timestamps: { createdAt: 'joined', updatedAt: 'lastLogin' } })
 
 module.exports = mongoose.model('Manager', Manager)
