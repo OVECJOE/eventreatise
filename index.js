@@ -24,8 +24,9 @@ app.use(session({
   saveUninitialized: true,
   cookie: { maxAge: 60 * 60 * 24 * 1000 } // 1 day
 }))
-app.use(express.static(path.join(__dirname, '/views')))
+app.use(express.static('uploads'))
 app.use(express.static(path.join(__dirname, '/public')))
+
 
 // set the view engine to EJS
 app.set('view engine', 'ejs')

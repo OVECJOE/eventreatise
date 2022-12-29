@@ -9,6 +9,7 @@ const Manager = require('../models/manager')
 const User = require('../models/user')
 const SpaceLocation = require('../models/space_location')
 const SpaceInfo = require('../models/space_info')
+const processImg = require('../utils/Imageprocess')
 
 // global variables
 
@@ -105,19 +106,22 @@ exports.create_manager = async (req, res) => {
   const { user } = req.session
 
   try {
+    // process image
+    const { fieldname, originalname, buffer } = req.file
+    const imagePath = await processImg(req, 'managers', fieldname, originalname, buffer)
+
+    // create manager
     const manager = await Manager.create({
       user: user._id,
       phoneNumber,
-      photo: {
-        data: fs.readFileSync(path.join(__dirname, '..', req.file.path)),
-        contentType: req.file.mimetype
-      }
+      photo: `http://localhost:${process.env.PORT}/${imagePath}`
     })
 
-    req.session.manager = await manager.populate(['user', 'followers', 'eventSpaces'])
+    console.log(`Successfully created manager! ID: ${manager._id}`)
 
     // set the isManager to true
-    req.session.user = await User.findByIdAndUpdate(user._id, { isManager: true }, { new: true }).exec()
+    req.session.user = await User.findByIdAndUpdate(user._id,
+      { isManager: true }, { new: true }).exec()
 
     const success_msg = 'A manager\'s account has been created, though not yet verified. You can go ahead and post event spaces though.'
     message.success_msg = success_msg
@@ -155,11 +159,6 @@ exports.create_space = async (req, res) => {
   const { user } = req.session
   const { formType } = req.body
 
-  // data to be sent to the client
-  const context = {
-    user,
-  }
-
   // check formType
   if (formType === 'category') {
     const { name, desc } = req.body
@@ -188,10 +187,11 @@ exports.create_space = async (req, res) => {
 
     try {
       for (const file of req.files) {
-        const photo = {
-          data: fs.readFileSync(path.join(__dirname, '..', file.path)),
-          contentType: file.mimetype
-        }
+        // get image path
+        const { fieldname, originalname, buffer } = file
+        const imagePath = await processImg(req, 'spaces', fieldname, originalname, buffer)
+        // generate image url from path
+        const photo = `http://localhost:${process.env.PORT}/${imagePath}`
 
         spaceData.photos.push(photo)
       }

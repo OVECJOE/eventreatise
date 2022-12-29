@@ -86,16 +86,14 @@
           >
           <% } %>
           <img
-            src="data:image/<%=space.photos[0].contentType%>;base64,
-                     <%=space.photos[0].data.toString('base64')%>"
+            src="<%= space.photos[0] %>"
             alt="<%= space.name%>"
             class="w-full h-40 object-cover rounded-t-lg"
           />
           <div class="flex gap-2 flex-col">
             <div class="flex gap-2 items-center bg-[#7ab9af]/30 px-2 py-1">
               <img
-                src="data:image/<%=space.manager.photo.contentType%>;base64,
-                <%= space.manager.photo.data.toString('base64') %>"
+                src="<%= space.manager.photo %>"
                 alt="Manager's picture"
                 class="rounded-full w-8 h-8 object-cover"
               />
@@ -108,7 +106,7 @@
               <%= space.name %>
             </h1>
             <p class="font-serif px-2 text-[#2a5c56] text-sm">
-              <%= space.desc %>
+              <%= space.desc.substring(0, 140) %>...
             </p>
           </div>
           <div class="flex gap-2 my-4 px-2 items-center self-center">
@@ -151,7 +149,7 @@
             </p>
             <a
               href="/dashboard/marketplace/<%= space._id %> "
-              class="bg-[#dfb25a] font-serif underlines"
+              class="font-serif underline font-bold"
             >
               View More
             </a>

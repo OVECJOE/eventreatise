@@ -18,7 +18,7 @@ const Manager = new Schema({
     validate: [isMobilePhone, 'Please enter a valid phone number!'],
     unique: [true, 'This phone number is already in use by another manager.'],
   },
-  photo: { data: Buffer, contentType: String },
+  photo: { type: String, trim: true },
   eventSpaces: [
     { type: ObjectId, ref: 'EventSpace' }
   ],
