@@ -4,7 +4,7 @@
   <body class="flex relative bg-fuchsia-500/5 overflow-hidden overflow-y-auto">
     <%- include('../partials/side_menu') %>
     <main
-      class="bg-[url('/assets/events.png')] bg-no-repeat bg-contain bg-right-bottom max-w-5xl mx-auto flex flex-col gap-5 my-5"
+      class="bg-[url('/assets/events.png')] bg-no-repeat bg-contain bg-right-bottom max-w-5xl mx-auto relative flex flex-col gap-5 my-5"
     >
       <%- include('../partials/err_toast') %> <%-
       include('../partials/success_toast') %>
@@ -51,10 +51,7 @@
               />
             </p>
             <div class="font-serif text-[#2a5c56] flex flex-col gap-2">
-              <label
-                for="category-field"
-                class="text-md font-semibold"
-              >
+              <label for="category-field" class="text-md font-semibold">
                 Space Category:
                 <span aria-label="required" class="font-rubik text-red-500"
                   >*</span

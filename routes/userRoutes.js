@@ -21,5 +21,7 @@ router.get('/spaces/create_new', ensureLoggedIn, userController.show_eventspace_
 router.post('/spaces/create_new',
   [ensureLoggedIn, upload('spaces').array('photos', 10)],
   userController.create_space)
+// view individual space details
+router.get('/marketplace/:id', ensureLoggedIn, userController.view_space_details)
 
 module.exports = router

@@ -2,11 +2,12 @@
 <html lang="en">
   <%- include('../partials/head', { title: 'Marketplace' }) %>
   <body class="flex relative bg-fuchsia-500/5 overflow-hidden overflow-y-auto">
-    <%- include('../partials/err_toast') %> <%- include('../partials/side_menu')
-    %>
+    <%- include('../partials/side_menu') %>
     <main
-      class="flex flex-col gap-5 grow min-h-screen px-5 py-8 md:p-10 max-w-6xl mx-auto overflow-hidden overflow-y-auto"
+      class="flex relative flex-col gap-5 grow min-h-screen px-5 py-8 md:p-10 max-w-6xl mx-auto overflow-hidden overflow-y-auto"
     >
+      <%- include('../partials/err_toast') %> <%-
+      include('../partials/success_toast') %>
       <div class="text-center font-serif text-[#dfb253]">
         <h1 class="text-3xl sm:text-5xl font-spray text-[#227791]">
           Eventreatise's Marketplace
@@ -97,7 +98,9 @@
                 alt="Manager's picture"
                 class="rounded-full w-8 h-8 object-cover"
               />
-              <span class="font-rubik text-sm text-[#dfb25a]"><%= space.manager.user.fullName %></span>
+              <span class="font-rubik text-sm text-[#dfb25a]"
+                ><%= space.manager.user.fullName %></span
+              >
             </div>
             <h1
               class="font-serif px-2 text-[#227791] text-2xl sm:text-3xl font-semibold"

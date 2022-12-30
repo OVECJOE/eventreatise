@@ -10,9 +10,9 @@ const User = require('../models/user')
 const SpaceLocation = require('../models/space_location')
 const SpaceInfo = require('../models/space_info')
 const processImg = require('../utils/Imageprocess')
+const likeOrDislike = require('../utils/likeOrDislike')
 
 // global variables
-
 const message = {
   errmsg: '',
   success_msg: ''
@@ -107,14 +107,15 @@ exports.create_manager = async (req, res) => {
 
   try {
     // process image
-    const { fieldname, originalname, buffer } = req.file
-    const imagePath = await processImg(req, 'managers', fieldname, originalname, buffer)
+    const { fieldname, mimetype, buffer } = req.file
+    // get photo link
+    const photo = await processImg(req, 'managers', fieldname, mimetype, buffer)
 
     // create manager
     const manager = await Manager.create({
       user: user._id,
       phoneNumber,
-      photo: `http://localhost:${process.env.PORT}/${imagePath}`
+      photo
     })
 
     console.log(`Successfully created manager! ID: ${manager._id}`)
@@ -167,6 +168,7 @@ exports.create_space = async (req, res) => {
       const category = await SpaceCategory.create({
         name, desc
       })
+      message.success_msg = `Successfully created category: ${category.name}`
       return res.redirect('/dashboard/spaces/create_new')
     } catch (err) {
       message.errmsg = err.message
@@ -188,10 +190,8 @@ exports.create_space = async (req, res) => {
     try {
       for (const file of req.files) {
         // get image path
-        const { fieldname, originalname, buffer } = file
-        const imagePath = await processImg(req, 'spaces', fieldname, originalname, buffer)
-        // generate image url from path
-        const photo = `http://localhost:${process.env.PORT}/${imagePath}`
+        const { fieldname, mimetype, buffer } = file
+        const photo = await processImg(req, 'spaces', fieldname, mimetype, buffer)
 
         spaceData.photos.push(photo)
       }
@@ -249,5 +249,59 @@ exports.create_space = async (req, res) => {
       return res.redirect('/dashboard/spaces/create_new')
     }
 
+  }
+}
+
+exports.view_space_details = async (req, res) => {
+  const { id } = req.params
+  const { action } = req.query
+  // data to be sent to the client
+  const context = {
+    user: req.session.user,
+    space: null,
+    eventSpaces: null,
+    ...message
+  }
+
+  try {
+    // get space by id and increment views by 1
+    const space = await EventSpace.findById(id).populate([
+      'location', 'category', 'moreInfo']).populate({
+        path: 'manager',
+        populate: 'user'
+      }).exec()
+    // get event spaces in the same category
+    const eventSpaces = await EventSpace.find({
+      category: space.category._id,
+      _id: { $ne: space._id }
+    })
+
+    context.eventSpaces = eventSpaces
+
+    if (!space.viewsList.includes(context.user._id)) {
+      space.views += 1
+      space.viewsList.push(context.user._id)
+      await space.save()
+    }
+
+    if (action === 'like') {
+      // like event space
+      likeOrDislike(space, context.user, space.likesList,
+        space.dislikesList, action)
+    } else if (action === 'dislike') {
+      // dislike event space
+      likeOrDislike(space, context.user, space.dislikesList,
+        space.likesList, action)
+    }
+
+    if (action) {
+      return res.redirect('/dashboard/marketplace/' + id)
+    }
+
+    context.space = space
+    return res.render('pages/eventspace', context)
+  } catch (err) {
+    message.errmsg = err.message
+    return res.redirect('/dashboard/marketplace')
   }
 }

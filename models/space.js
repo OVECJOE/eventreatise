@@ -32,6 +32,15 @@ const EventSpace = Schema({
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
   dislikes: { type: Number, default: 0 },
+  viewsList: [
+    { type: ObjectId, ref: 'User'}
+  ],
+  likesList: [
+    { type: ObjectId, ref: 'User' }
+  ],
+  dislikesList: [
+    { type: ObjectId, ref: 'User' }
+  ],
   booked: { type: Boolean, default: false },
   refundable: { type: Boolean, default: true },
   category: { type: ObjectId, ref: 'SpaceCategory' },

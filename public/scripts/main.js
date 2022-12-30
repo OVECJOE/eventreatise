@@ -2,6 +2,8 @@ const errorCardBtn = document.querySelector('#error-card button')
 const successCardBtn = document.querySelector('#success-card button')
 const closeFormBtn = document.querySelector('#close-form-btn')
 const createBtn = document.querySelector('#create-btn')
+const navBackBtn = document.querySelector('#nav-back-btn')
+
 // the popup form
 let containerForm
 
@@ -25,4 +27,8 @@ closeFormBtn && closeFormBtn.addEventListener('click', (e) => {
 
   // hide form
   containerForm.parentElement.classList.add('hidden')
+})
+
+navBackBtn && navBackBtn.addEventListener('click', () => {
+  window.history.back()
 })

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head', { title: 'Marketplace' }) %>
+  <%- include('../partials/head', { title: 'My Event Spaces' }) %>
   <body class="flex relative bg-fuchsia-500/5 overflow-hidden overflow-y-auto">
     <%- include('../partials/side_menu') %>
     <main
@@ -30,9 +30,9 @@
       </div>
       <% } %>
       <div
-        class="flex flex-wrap gap-5 lg:gap-3 items-start justify-center lg:justify-between"
+        class="flex flex-wrap gap-5 lg:gap-3 justify-center lg:justify-between"
       >
-        <div class="w-full lg:w-7/12 overflow-x-auto relative">
+        <div class="w-full lg:w-7/12 overflow-x-auto relative h-max">
           <table class="w-full text-sm text-left table-auto max-h-60">
             <% if (spaces) { %> <% if (spaces.length == 0) { %>
             <div class="m-auto text-center">

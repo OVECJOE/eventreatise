@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', { title: space.name }) %>
+  <body class="flex relative bg-fuchsia-500/5">
+    <%- include('../partials/side_menu') %>
+    <main
+      class="flex relative flex-col gap-5 grow min-h-screen px-5 py-5 max-w-6xl mx-auto overflow-y-auto"
+    >
+      <%- include('../partials/err_toast') %> <%-
+      include('../partials/success_toast') %>
+      <p class="sticky top-1 z-10 flex items-start justify-between">
+        <button
+          id="nav-back-btn"
+          class="text-[#dfb253] font-rubik p-3 bg-black rounded-md w-max"
+        >
+          Go Back
+        </button>
+        <span
+          class="font-rubik absolute right-1 text-[#a05231] bg-fuchsia-500/5 top-1 bg-[url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg')] bg-no-repeat bg-contain bg-bottom"
+        >
+          <%= space.booked ? 'Booked' : 'Available' %>
+        </span>
+      </p>
+      <h1
+        class="text-center text-[#a05231] font-spray text-2xl uppercase py-3 bg-[url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg')] bg-no-repeat bg-contain bg-bottom"
+      >
+        <%= space.name %>
+      </h1>
+      <section class="flex flex-col sm:flex-row items-start justify-between gap-5">
+        <div class="flex w-full sm:w-5/12 flex-col gap-2">
+          <img
+            src="<%= space.photos[0] %>"
+            alt="<%= space.name %>"
+            class="w-full object-cover h-80 rounded-lg"
+          />
+          <p class="flex gap-2 justify-center">
+            <button
+              class="font-bold w-8 h-8 rounded-full bg-[#dfb253] text-[#2a5c56] pb-1"
+            >
+              &triangleleft;
+            </button>
+            <button
+              class="font-bold w-8 h-8 rounded-full bg-[#dfb253] text-[#2a5c56] pb-1"
+            >
+              &triangleright;
+            </button>
+          </p>
+        </div>
+        <div
+          class="w-full grow sm:w-5/12 flex flex-col gap-5 p-2 font-serif text-[#2a5c56]"
+        >
+          <div
+            class="flex items-center gap-2 justify-between opacity-60 text-xs"
+          >
+            <p class="text-black font-sans font-light">
+              Posted On:
+              <span class="text-[#a05231] font-semibold"
+                ><%= space.postedOn.toString().substring(0, 24) %></span
+              >
+            </p>
+            <p class="text-black font-sans font-light">
+              Updated On:
+              <span class="text-[#a05231] font-semibold"
+                ><%= space.editedOn.toString().substring(0, 24) %></span
+              >
+            </p>
+          </div>
+          <p class="items-end text-lg font-semibold leading-6 max-h-60 overflow-y-auto">
+            <%= space.desc %>
+          </p>
+          <details class="w-full py-2 px-1 border bg-white rounded-sm">
+            <summary class="text-[#a05231] font-semibold">
+              <%= space.category.name %>
+            </summary>
+            <p class="font-sans font-light indent-5">
+              <%= space.category.desc ? space.category.desc : 'No Description'
+              %>
+            </p>
+          </details>
+          <div class="flex gap-2 my-4 px-2 items-center">
+            <div
+              class="flex gap-1 bg-white p-1 rounded-full items-center min-w-max"
+            >
+              <img src="/assets/seen.png" alt="Number of views" width="15px" />
+              <span class="font-sans font-bold text-sm text-[#227791]"
+                ><%= space.views %>
+              </span>
+            </div>
+            <span class="text-[#a05231] font-bold">&diamondsuit;</span>
+            <a href="/dashboard/marketplace/<%= space._id %>?action=like">
+              <div
+                class="flex gap-1 bg-white p-1 rounded-full items-center min-w-max"
+              >
+                <img
+                  src="/assets/likes.png"
+                  alt="Number of likes"
+                  width="15px"
+                />
+                <span class="font-sans font-bold text-sm text-[#227791]">
+                  <%= space.likes %>
+                </span>
+              </div>
+            </a>
+            <span class="text-[#a05231] font-bold">&diamondsuit;</span>
+            <a href="/dashboard/marketplace/<%= space._id %>?action=dislike">
+              <div
+                class="flex gap-1 bg-white p-1 rounded-full items-center min-w-max"
+              >
+                <img
+                  src="/assets/dislikes.png"
+                  alt="Number of dislikes"
+                  width="15px"
+                />
+                <span class="font-sans font-bold text-sm text-[#227791]">
+                  <%= space.dislikes %>
+                </span>
+              </div>
+            </a>
+          </div>
+          <p
+            class="font-sans font-bold flex text-sm lg:text-lg gap-2 items-center sticky top-1 text-[#dfb253] justify-center"
+          >
+            <button class="p-3 bg-[#2a5c56] text-center shadow-lg rounded-full">
+              Book Space
+            </button>
+            <a
+              href="tel:+<%= space.manager.phoneNumber %>"
+              class="p-3 text-center bg-[#a05231] shadow-lg rounded-full"
+              >Call Manager</a
+            >
+          </p>
+        </div>
+      </section>
+      <section class="bg-white p-2 border shadow-md">
+        <h2 class="uppercase text-xl font-bold text-[#dfb253] py-1">
+          Event Space Manager
+        </h2>
+        <hr class="mb-3">
+        <div class="flex items-center gap-2 w-full">
+          <a href="/dashboard/managers/<%= space.manager._id %>">
+            <p class="flex items-center gap-2">
+              <img
+                src="<%= space.manager.photo %> "
+                alt="<%= space.manager.user.fullName %>"
+                class="w-10 h-10 object-cover rounded-full"
+              />
+              <span class="text-[#a05231] font-rubik"
+                ><%= space.manager.user.fullName %></span
+              >
+            </p>
+          </a>
+          <% if (space.manager.isVerified) { %>
+          <span class="text-sm font-rubik text-green-500 bg-black p-2 ml-auto"
+            >Verified</span
+          >
+          <% } else { %>
+          <span class="text-sm font-rubik text-red-500 bg-black p-2 ml-auto"
+            >Not Verified</span
+          >
+          <% } %>
+        </div>
+      </section>
+      <div class="w-full overflow-x-auto relative flex flex-col gap-2 my-5">
+        <h2 class="uppercase text-xl font-bold text-[#a05231]">
+          Event Space Location
+        </h2>
+        <table class="w-full font-serif table-auto border bg-white">
+          <thead class="bg-[#6eb3a9] text-xs text-[#a05231] uppercase">
+            <tr>
+              <th scope="col" class="py-3 px-6 border border-[#6eb3a9]">
+                Address
+              </th>
+              <th scope="col" class="py-3 px-6 border border-[#6eb3a9]">
+                Postal Code
+              </th>
+              <th scope="col" class="py-3 px-6 border border-[#6eb3a9]">
+                City
+              </th>
+              <th scope="col" class="py-3 px-6 border border-[#6eb3a9]">
+                State
+              </th>
+              <th scope="col" class="py-3 px-6 border border-[#6eb3a9]">
+                Country
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-[#7ab9af]/30 text-center text-[#2a5c56]">
+              <th scope="row" class="py-4 px-6 font-extrabold">
+                <%= space.location.address %>
+              </th>
+              <td class="py-4 px-6 font-semibold">
+                <%= space.location.postalCode %>
+              </td>
+              <td class="py-4 px-6 font-semibold">
+                <%= space.location.city %>
+              </td>
+              <td class="py-4 px-6 font-semibold">
+                <%= space.location.state %>
+              </td>
+              <td class="py-4 px-6 font-semibold">
+                <%= space.location.country %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <section
+        class="flex flex-col md:flex-row gap-5 items-start justify-between"
+      >
+        <article class="w-full md:w-7/12 font-serif text-[#2a5c56]">
+          <h2 class="uppercase text-xl font-bold text-[#a05231]">
+            More Information
+          </h2>
+          <hr class="mb-2" />
+          <div class="grid grid-cols-auto gap-5 text-xs my-3">
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Parking Space</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.ps ? `${space.moreInfo.pss} sq. metres` :
+                'Not Specified' %>
+              </span>
+            </p>
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Ventilation</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.ventilation %></span
+              >
+            </p>
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Restroom</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.restroom ? 'Yes' : 'No' %></span
+              >
+            </p>
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Easily Accessible</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.isEasilyAccessible ? 'Yes' : 'No' %></span
+              >
+            </p>
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Sound System</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.ss %></span
+              >
+            </p>
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Light System</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.ls %></span
+              >
+            </p>
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Security</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.securityStatus %></span
+              >
+            </p>
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Available Furniture</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.furnitureCount ?
+                space.moreInfo.furnitureCount : 'Not Specified' %></span
+              >
+            </p>
+            <p
+              class="flex items-center gap-2 bg-white justify-between px-2 py-3 rounded-sm shadow-md"
+            >
+              <span class="font-bold uppercase">Space Area</span>
+              <span class="font-rubik text-[#dfb253]"
+                ><%= space.moreInfo.size ? `${space.moreInfo.size} sq. metres` :
+                'Not Specified' %></span
+              >
+            </p>
+          </div>
+        </article>
+        <aside class="w-full grow md:w-3/12 border rounded-md p-2 h-max">
+          <h3
+            class="text-md text-center font-bold uppercase text-[#2a5c56] font-mono"
+          >
+            Spaces in the Same Category
+          </h3>
+          <div class="flex gap-1 items-center justify-center my-1">
+            <hr class="w-2 h-2 rounded-full bg-[#dfb253] border-none" />
+            <hr class="w-2 h-2 rounded-full bg-[#dfb253] border-none" />
+            <hr class="w-2 h-2 rounded-full bg-[#dfb253] border-none" />
+          </div>
+          <div class="flex flex-col gap-3 py-3">
+            <% for (const es of eventSpaces) { %>
+            <a
+              href="/dashboard/marketplace/<%= es._id %>"
+              class="text-[#a05231] font-semibold"
+            >
+              <p class="flex items-center gap-2">
+                <img
+                  src="<%= es.photos[0] %>"
+                  alt="<%= es.name %>"
+                  class="w-10 h-10 rounded-full"
+                />
+                <span class="font-serif text-md"><%= es.name %></span>
+              </p>
+            </a>
+            <% } %>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
