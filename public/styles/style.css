@@ -543,6 +543,9 @@ video {
 .-z-10 {
   z-index: -10;
 }
+.z-20 {
+  z-index: 20;
+}
 .col-span-1 {
   grid-column: span 1 / span 1;
 }
@@ -1038,6 +1041,14 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(217 70 239 / var(--tw-border-opacity));
 }
+.border-green-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(22 163 74 / var(--tw-border-opacity));
+}
+.border-green-900 {
+  --tw-border-opacity: 1;
+  border-color: rgb(20 83 45 / var(--tw-border-opacity));
+}
 .border-t-\[\#98bd75\] {
   --tw-border-opacity: 1;
   border-top-color: rgb(152 189 117 / var(--tw-border-opacity));
@@ -1135,6 +1146,22 @@ video {
 .bg-fuchsia-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(250 232 255 / var(--tw-bg-opacity));
+}
+.bg-\[\#6eb3a9\]\/100 {
+  background-color: rgb(110 179 169 / 1);
+}
+.bg-\[\#333d3c\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 61 60 / var(--tw-bg-opacity));
+}
+.bg-\[\#333d3c\]\/50 {
+  background-color: rgb(51 61 60 / 0.5);
+}
+.bg-\[\#333d3c\]\/70 {
+  background-color: rgb(51 61 60 / 0.7);
+}
+.bg-transparent {
+  background-color: transparent;
 }
 .bg-\[url\(\'https\:\/\/uploads-ssl\.webflow\.com\/61cee5eb4d566d3471eca114\/61d2f2e602a2a8b328d55188_underline\%205\.svg\'\)\] {
   background-image: url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg');
@@ -1874,6 +1901,11 @@ video {
   .lg\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .lg\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 
   .lg\:shadow-lg {

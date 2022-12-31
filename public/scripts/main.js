@@ -1,19 +1,16 @@
-const errorCardBtn = document.querySelector('#error-card button')
-const successCardBtn = document.querySelector('#success-card button')
+const messageCardBtn = document.querySelector('#message-card button')
 const closeFormBtn = document.querySelector('#close-form-btn')
 const createBtn = document.querySelector('#create-btn')
 const navBackBtn = document.querySelector('#nav-back-btn')
 
 // the popup form
-let containerForm
+let containerForm;
 
-[errorCardBtn, successCardBtn].forEach(button => {
-  button && button.addEventListener('click', (e) => {
+messageCardBtn && messageCardBtn.addEventListener('click', (e) => {
     e.stopPropagation()
   
-    button.parentElement.style.display = 'none'
+    e.currentTarget.parentElement.style.display = 'none'
   })
-})
 
 createBtn && createBtn.addEventListener('click', (e) => {
   containerForm = document.querySelector('#create-form')

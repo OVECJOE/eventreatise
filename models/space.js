@@ -1,5 +1,6 @@
 // dependencies
 const mongoose = require('mongoose')
+const { isCurrency } = require('validator')
 
 const Schema = mongoose.Schema
 const { ObjectId } = Schema.Types
@@ -33,7 +34,7 @@ const EventSpace = Schema({
   likes: { type: Number, default: 0 },
   dislikes: { type: Number, default: 0 },
   viewsList: [
-    { type: ObjectId, ref: 'User'}
+    { type: ObjectId, ref: 'User' }
   ],
   likesList: [
     { type: ObjectId, ref: 'User' }
@@ -41,6 +42,13 @@ const EventSpace = Schema({
   dislikesList: [
     { type: ObjectId, ref: 'User' }
   ],
+  price: {
+    currency: {
+      type: String,
+      validate: [isCurrency, 'Please provide a valid currency']
+    },
+    value: { type: Number, default: 0 }
+  },
   booked: { type: Boolean, default: false },
   refundable: { type: Boolean, default: true },
   category: { type: ObjectId, ref: 'SpaceCategory' },

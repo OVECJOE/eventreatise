@@ -6,8 +6,7 @@
     <main
       class="flex relative flex-col gap-5 grow min-h-screen px-5 py-5 max-w-6xl mx-auto overflow-y-auto"
     >
-      <%- include('../partials/err_toast') %> <%-
-      include('../partials/success_toast') %>
+      <%- include('../partials/msg_toast') %>
       <p class="sticky top-1 z-10 flex items-start justify-between">
         <button
           id="nav-back-btn"
@@ -26,7 +25,9 @@
       >
         <%= space.name %>
       </h1>
-      <section class="flex flex-col sm:flex-row items-start justify-between gap-5">
+      <section
+        class="flex flex-col sm:flex-row items-start justify-between gap-5"
+      >
         <div class="flex w-full sm:w-5/12 flex-col gap-2">
           <img
             src="<%= space.photos[0] %>"
@@ -65,7 +66,9 @@
               >
             </p>
           </div>
-          <p class="items-end text-lg font-semibold leading-6 max-h-60 overflow-y-auto">
+          <p
+            class="items-end text-lg font-semibold leading-6 max-h-60 overflow-y-auto"
+          >
             <%= space.desc %>
           </p>
           <details class="w-full py-2 px-1 border bg-white rounded-sm">
@@ -118,16 +121,27 @@
             </a>
           </div>
           <p
-            class="font-sans font-bold flex text-sm lg:text-lg gap-2 items-center sticky top-1 text-[#dfb253] justify-center"
+            class="font-sans font-bold flex text-sm lg:text-md gap-2 items-center sticky top-1 text-[#dfb253] justify-center"
           >
-            <button class="p-3 bg-[#2a5c56] text-center shadow-lg rounded-full">
-              Book Space
-            </button>
-            <a
-              href="tel:+<%= space.manager.phoneNumber %>"
-              class="p-3 text-center bg-[#a05231] shadow-lg rounded-full"
-              >Call Manager</a
+          <a
+          href="tel:+<%= space.manager.phoneNumber %>"
+          class="px-3 py-2 text-center bg-[#a05231] shadow-lg rounded-full"
+          >Call Manager</a
+        >
+            <% if (cart && cart.eventSpaces.indexOf(space._id) !== -1) { %>
+            <span
+              class="px-3 py-2 text-green-900 bg-[url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg')] bg-no-repeat bg-contain bg-bottom text-center"
             >
+              Added to Cart
+            </span>
+            <% } else { %>
+            <a
+              href="/dashboard/cart/add/<%= space._id %>"
+              class="px-3 py-2 bg-[#2a5c56] text-center shadow-lg rounded-full"
+            >
+              Add to Cart
+            </a>
+            <% } %>
           </p>
         </div>
       </section>
@@ -135,7 +149,7 @@
         <h2 class="uppercase text-xl font-bold text-[#dfb253] py-1">
           Event Space Manager
         </h2>
-        <hr class="mb-3">
+        <hr class="mb-3" />
         <div class="flex items-center gap-2 w-full">
           <a href="/dashboard/managers/<%= space.manager._id %>">
             <p class="flex items-center gap-2">

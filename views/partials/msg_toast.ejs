@@ -1,0 +1,21 @@
+<% if (locals.message.status) { %> <% if
+(locals.message.status.toString().charAt(0) === '2') { %>
+<div
+  class="absolute top-1 left-0 border-l-2 border-r-2 z-20 max-w-6xl m-auto border-green-900 right-0 p-3 text-black bg-[#6eb3a9]/100"
+  id="message-card"
+>
+  <% } else { %>
+  <div
+    class="absolute top-1 left-0 border-l-2 border-r-2 z-20 max-w-6xl m-auto border-red-500 right-0 p-3 text-red-500 bg-yellow-100"
+    id="message-card"
+  >
+    <% } %>
+    <span class="font-serif font-semibold"><%= locals.message.body %></span>
+    <button
+      class="absolute font-rubik right-1 top-1 bottom-1 cursor-pointer text-4xl"
+    >
+      &times;
+    </button>
+  </div>
+  <% } %>
+</div>
