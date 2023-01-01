@@ -77,7 +77,7 @@
         <% } %> <% for (const category of categories) { %> <% for (const space
         of category.eventSpaces) { %>
         <article
-          class="flex flex-col relative justify-between rounded-lg shadow-md shadow-[#227791]"
+          class="flex flex-col relative justify-between h-max rounded-lg shadow-md shadow-[#227791]"
         >
           <% if (space.booked) { %>
           <span
@@ -102,13 +102,13 @@
               >
             </div>
             <h1
-              class="font-serif px-2 text-[#227791] text-2xl sm:text-3xl font-semibold"
+              class="font-serif px-2 text-[#227791] text-2xl font-semibold whitespace-nowrap text-ellipsis overflow-hidden w-full"
               id="space-title"
             >
               <%= space.name %>
             </h1>
-            <p class="font-serif px-2 text-[#2a5c56] text-sm">
-              <%= space.desc.substring(0, 140) %>...
+            <p class="font-serif px-2 text-[#2a5c56] text-sm w-full line-clamp-3">
+              <%= space.desc %>...
             </p>
           </div>
           <div class="flex gap-2 my-4 px-2 items-center self-center">

@@ -45,7 +45,7 @@ const EventSpace = Schema({
   price: {
     currency: {
       type: String,
-      maxLength: 2,
+      required: false,
       default: '$'
     },
     value: { type: Number, default: 0 }

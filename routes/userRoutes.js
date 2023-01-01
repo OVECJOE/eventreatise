@@ -27,5 +27,9 @@ router.get('/marketplace/:id', ensureLoggedIn, userController.view_space_details
 router.get('/cart/add/:spaceId', ensureLoggedIn, userController.add_to_cart)
 // view cart
 router.get('/cart', ensureLoggedIn, userController.view_cart)
+// delete cart item
+router.get('/cart/delete/:spaceId', ensureLoggedIn, userController.delete_cart_item)
+// delete cart
+router.get('/cart/delete', userController.delete_cart)
 
 module.exports = router

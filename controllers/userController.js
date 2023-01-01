@@ -33,7 +33,7 @@ exports.view_dashboard = async (req, res) => {
 
   context.followingCount = context.user.following.length
   context.availableSpaces = await EventSpace.find({ booked: false }).countDocuments()
-  context.cartSize = cart.noOfSpaces
+  context.cartSize = cart?.noOfSpaces ?? 0
 
   return res.render('pages/dashboard', context)
 }
@@ -337,7 +337,7 @@ exports.view_space_details = async (req, res) => {
     return res.render('pages/eventspace', context)
   } catch (err) {
     message.status = StatusCodes.BAD_REQUEST
-    message.body = getReasonPhrase(message.status)
+    message.body = err.message
     // redirect to the marketplace
     return res.redirect('/dashboard/marketplace')
   }
@@ -349,7 +349,18 @@ exports.add_to_cart = async (req, res) => {
 
   try {
     // get space price
-    const space = await EventSpace.findById(spaceId, 'name price')
+    const space = await EventSpace.findById(spaceId, 'name price manager')
+
+    // check if user is a manager
+    const isManager = await Manager.findOne({ user: user._id })
+
+    if (isManager && isManager._id.toString() === space.manager.toString()) {
+      message.body = 'Adding an event space created by you to cart is a very bad idea!'
+      message.status = StatusCodes.BAD_REQUEST
+
+      // redirect to the original URL
+      return res.redirect(`/dashboard/marketplace/${spaceId}`)
+    }
 
     if (!space) {
       message.body = 'Cannot add space to cart; Space not found!'
@@ -408,12 +419,24 @@ exports.view_cart = async (req, res) => {
   clearStatusMsg(message, context)
 
   try {
-    const cart = await Cart.findOne({ user: user._id })
+    let cart = await Cart.findOne({ user: user._id })
       .populate({
         path: 'eventSpaces',
         populate: 'category'
       }).exec()
-    
+
+    if (!cart) {
+      cart = await Cart.create({
+        user: user._id
+      })
+
+      message.body = 'New cart has been created for you!'
+      message.status = StatusCodes.CREATED
+
+      // set and clear message
+      clearStatusMsg(message, context)
+    }
+
     // add cart to context
     context.cart = cart
   } catch (err) {
@@ -425,4 +448,71 @@ exports.view_cart = async (req, res) => {
 
   // render page
   return res.render('pages/cart', context)
+}
+
+exports.delete_cart_item = async (req, res) => {
+  const { user } = req.session
+  const { spaceId } = req.params
+
+  try {
+    const cart = await Cart.findOne({ user: user._id })
+
+    if (cart) {
+      const idx = cart.eventSpaces.indexOf(spaceId)
+
+      if (idx === -1) {
+        message.body = 'This event space is not an item in your cart!'
+        message.status = StatusCodes.BAD_REQUEST
+      } else {
+        // get the space from the database
+        const space = await EventSpace.findById(spaceId).select('name price')
+        // remove the space from the cart
+        cart.eventSpaces.splice(idx, 1)
+        // decrement the no of items in cart
+        cart.noOfSpaces -= 1
+        // reduce the total price
+        cart.totalPrice -= space.price.value
+
+        // save to database
+        await cart.save()
+
+        // set feedback message
+        message.body = `"${space.name}" removed from cart successfully!`
+        message.status = StatusCodes.OK
+      }
+    } else {
+      message.body = 'No cart associated to this user!'
+      message.status = StatusCodes.NOT_FOUND
+    }
+  } catch (err) {
+    message.body = err.message
+    message.status = StatusCodes.BAD_REQUEST
+  }
+
+  // redirect to cart
+  return res.redirect('/dashboard/cart')
+}
+
+exports.delete_cart = async (req, res) => {
+  const { user } = req.session
+
+  try {
+    const cart = await Cart.findOneAndUpdate({ user: user._id }, {
+      $set: { eventSpaces: [], noOfSpaces: 0, totalPrice: 0 }
+    })
+
+    if (cart) {
+      message.body = `All cart items have been removed from cart-${cart._id}.`
+      message.status = StatusCodes.NO_CONTENT
+    } else {
+      message.body = 'Cart was not found, therefore, deletion failed!'
+      message.status = StatusCodes.NOT_FOUND
+    }
+  } catch (err) {
+    message.body = err.message
+    message.status = StatusCodes.BAD_REQUEST
+  }
+
+  // redirect to cart
+  return res.redirect('/dashboard/cart')
 }

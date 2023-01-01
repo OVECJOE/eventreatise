@@ -22,17 +22,18 @@
         <span class="absolute -top-2 -right-2 font-bold py-1 px-3 text-sm font-sans rounded-full text-white bg-[#a05231]"><%= cart.noOfSpaces %></span>
         <div class="flex gap-3 justify-between items-center border-b py-2">
           <h3 class="font-spray text-lg sm:text-xl text-[#68b9d0]">Cart Items</h3>
-          <a href="/dashboard/cart/<%= cart._id %>/delete" class="text-[#a05231] text-sm font-mono">
+          <a href="/dashboard/cart/delete" class="text-[#a05231] text-sm font-mono">
             Remove All
           </a>
         </div>
         <div class="flex flex-col gap-2">
           <% for (const es of cart.eventSpaces) { %>
-            <article class="flex gap-4 justify-between items-center py-2 font-sans text-xs sm:text-sm border-b">
+            <article class="flex gap-4 justify-between items-center py-2 font-sans text-xs sm:text-sm border-b relative">
+              <a href="/dashboard/cart/delete/<%= es._id %>" class="text-[#a05231] font-spray bg-[#68b9d0] rounded-full text-2xl absolute right-1/2 left-1/2 w-max -top-5 px-2">&times;</a>
               <img src="<%= es.photos[0] %>" alt="<%= es.name %>" width="40px" height="50px" class="rounded-lg">
               <div class="flex flex-col sm:flex-row ml-3 gap-2 justify-between sm:items-center grow sm:grow-0 w-full">
                 <p class="flex flex-col gap-1 justify-center sm:text-center text-sm font-bold">
-                  <a href="/dashboard/marketplace/<%= es._id %>" class="text-[#136075] font-serif">
+                  <a href="/dashboard/marketplace/<%= es._id %>" class="text-[#136075] font-serif line-clamp-1 w-full">
                     <span><%= es.name %></span>
                   </a>
                   <span class="text-xs text-black/50 font-light sm:font-bold font-sans"><%= es.editedOn.toString().substring(4, 15) %></span>

@@ -29,5 +29,8 @@
     "sharp": "^0.31.3",
     "tailwindcss": "^3.2.4",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.2"
   }
 }
