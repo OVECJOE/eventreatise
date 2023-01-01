@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', { title: 'My Cart' }) %>
+  <body class="flex relative bg-fuchsia-500/5">
+    <%- include('../partials/side_menu') %>
+    <main
+      class="flex relative flex-col gap-5 grow min-h-screen px-3 sm:px-5 py-5 max-w-5xl mx-auto overflow-y-auto"
+    >
+      <%- include('../partials/msg_toast') %>
+      <div class="flex flex-col gap-2 items-center my-3">
+        <h1 class="text-3xl font-spray text-[#68b9d0] uppercase">My Cart</h1>
+        <div class="flex gap-1 items-center">
+          <span class="w-3 h-3 rounded-full shadow-lg bg-[#dfb253]"></span>
+          <span class="w-3 h-3 rounded-full shadow-lg bg-[#dfb253]"></span>
+          <span class="w-3 h-3 rounded-full shadow-lg bg-[#dfb253]"></span>
+        </div>
+        <h2 class="font-mono text-lg md:text-2xl text-[#a05231]/30 overflow-hidden text-ellipsis whitespace-nowrap w-full text-center">
+          cart-<%= cart._id %>
+        </h2>
+      </div>
+      <section class="bg-white p-3 shadow-lg flex flex-col relative">
+        <span class="absolute -top-2 -right-2 font-bold py-1 px-3 text-sm font-sans rounded-full text-white bg-[#a05231]"><%= cart.noOfSpaces %></span>
+        <div class="flex gap-3 justify-between items-center border-b py-2">
+          <h3 class="font-spray text-lg sm:text-xl text-[#68b9d0]">Cart Items</h3>
+          <a href="/dashboard/cart/<%= cart._id %>/delete" class="text-[#a05231] text-sm font-mono">
+            Remove All
+          </a>
+        </div>
+        <div class="flex flex-col gap-2">
+          <% for (const es of cart.eventSpaces) { %>
+            <article class="flex gap-4 justify-between items-center py-2 font-sans text-xs sm:text-sm border-b">
+              <img src="<%= es.photos[0] %>" alt="<%= es.name %>" width="40px" height="50px" class="rounded-lg">
+              <div class="flex flex-col sm:flex-row ml-3 gap-2 justify-between sm:items-center grow sm:grow-0 w-full">
+                <p class="flex flex-col gap-1 justify-center sm:text-center text-sm font-bold">
+                  <a href="/dashboard/marketplace/<%= es._id %>" class="text-[#136075] font-serif">
+                    <span><%= es.name %></span>
+                  </a>
+                  <span class="text-xs text-black/50 font-light sm:font-bold font-sans"><%= es.editedOn.toString().substring(4, 15) %></span>
+                </p>
+                <p class="text-[#a05231] uppercase sm:text-center font-semibold"><%= es.category.name %></p>
+                <h4 class="text-lg sm:text-xl font-rubik text-[#136075]"><%= es.rentPrice %></h4>
+              </div>
+            </article>
+          <% } %> 
+        </div>
+        <div class="flex flex-col gap-2 mt-3">
+          <p class="flex justify-between gap-2 items-center">
+            <span class="font-serif font-bold text-lg sm:text-xl text-[#68b9d0]">Subtotal</span>
+            <span class="text-[#a05231] text-xl font-rubik"><%= cart.totalPrice %></span>
+          </p>
+          <p class="flex justify-between gap-2 items-center">
+            <span class="font-serif font-bold text-lg sm:text-xl text-[#68b9d0]">Discount</span>
+            <span class="text-[#a05231] text-xl font-rubik">$0.0</span>
+          </p>
+          <p class="flex justify-between gap-2 items-center">
+            <span class="font-serif font-bold text-lg sm:text-xl text-[#68b9d0]">Total</span>
+            <span class="text-[#a05231] text-xl font-rubik"><%= cart.totalPrice %></span>
+          </p>
+        </div>
+        <button class="uppercase text-sm sm:text-lg font-serif font-bold p-3 shadow-md bg-[#dfb253] text-[#136075] rounded-sm mt-3">Proceed to Checkout</button>
+      </section>
+    </main>
+  </body>
+</html>

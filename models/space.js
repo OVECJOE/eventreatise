@@ -45,7 +45,8 @@ const EventSpace = Schema({
   price: {
     currency: {
       type: String,
-      validate: [isCurrency, 'Please provide a valid currency']
+      maxLength: 2,
+      default: '$'
     },
     value: { type: Number, default: 0 }
   },
@@ -59,6 +60,13 @@ const EventSpace = Schema({
   timestamps: {
     'createdAt': 'postedOn',
     'updatedAt': 'editedOn'
+  },
+  virtuals: {
+    rentPrice: {
+      get() {
+        return `${this.price.currency}${this.price.value}`
+      }
+    }
   }
 })
 

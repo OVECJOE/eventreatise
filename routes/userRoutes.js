@@ -25,5 +25,7 @@ router.post('/spaces/create_new',
 router.get('/marketplace/:id', ensureLoggedIn, userController.view_space_details)
 // add space to cart
 router.get('/cart/add/:spaceId', ensureLoggedIn, userController.add_to_cart)
+// view cart
+router.get('/cart', ensureLoggedIn, userController.view_cart)
 
 module.exports = router

@@ -22,14 +22,18 @@ exports.view_dashboard = async (req, res) => {
   const context = {
     user: req.session.user,
     followingCount: 0,
-    availableSpaces: 0
+    availableSpaces: 0,
+    cartSize: 0
   }
+  // get user's cart
+  const cart = await Cart.findOne({ user: context.user._id })
 
   // set and clear message
   clearStatusMsg(message, context)
 
   context.followingCount = context.user.following.length
   context.availableSpaces = await EventSpace.find({ booked: false }).countDocuments()
+  context.cartSize = cart.noOfSpaces
 
   return res.render('pages/dashboard', context)
 }
@@ -390,4 +394,35 @@ exports.add_to_cart = async (req, res) => {
 
   // redirect to the original URL
   return res.redirect(`/dashboard/marketplace/${spaceId}`)
+}
+
+exports.view_cart = async (req, res) => {
+  const { user } = req.session
+
+  // data to be sent to the client
+  const context = {
+    user, cart: null,
+  }
+
+  // set and clear message
+  clearStatusMsg(message, context)
+
+  try {
+    const cart = await Cart.findOne({ user: user._id })
+      .populate({
+        path: 'eventSpaces',
+        populate: 'category'
+      }).exec()
+    
+    // add cart to context
+    context.cart = cart
+  } catch (err) {
+    message.body = err.message
+    message.status = StatusCodes.BAD_REQUEST
+    // redirect to dashboard home
+    return res.redirect('/dashboard')
+  }
+
+  // render page
+  return res.render('pages/cart', context)
 }
