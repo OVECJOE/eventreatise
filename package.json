@@ -16,6 +16,7 @@
     "body-parser": "^1.20.1",
     "connect-ensure-login": "^0.1.1",
     "country-state-city": "^3.1.2",
+    "currency-list": "^1.0.8",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",

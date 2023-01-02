@@ -74,7 +74,9 @@
             </thead>
             <tbody>
               <% for (const space of spaces) { %>
-              <tr class="bg-[#7ab9af]/30 font-sans text-center">
+              <tr
+                class="bg-[#7ab9af]/30 font-sans text-center overflow-hidden whitespace-nowrap text-ellipsis"
+              >
                 <th scope="row" class="py-4 px-6 font-semibold text-[#dfb253]">
                   <a href="/dashboard/marketplace/<%= space._id %>"
                     ><%= space.name %></a
@@ -159,6 +161,9 @@
           >
         </h1>
         <hr class="mb-4 bg-[#dfb253] w-full h-1 rounded-full border-0" />
+        <span class="text-[#a05231] bg-[#dfb253]/20 p-1 font-mono font-light text-sm">
+          All fields are required, dude!
+        </span>
         <label for="phone_no-field" class="font-semibold"
           >Enter your phone number:</label
         >
@@ -178,6 +183,16 @@
           required
           class="border border-[#a05231] rounded-md p-1 file:px-4 file:py-1 file:border-0 file:shadow-lg file:mr-4 file:rounded-full file:bg-[#dfb253]/40 file:font-semibold file:text-[#a05231] hover:file:bg-violet-100"
         />
+        <label for="bio-field" class="font-semibold">Enter a short bio:</label>
+        <textarea
+          name="bio"
+          id="bio-field"
+          cols="10"
+          rows="5"
+          placeholder="I am an event manager..."
+          class="outline-none rounded-md indent-2 py-1 border-none w-full"
+          required
+        ></textarea>
         <button class="mt-4 p-2 rounded-full bg-[#dfb253] font-bold shadow-xl">
           Create Account
         </button>

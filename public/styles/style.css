@@ -681,6 +681,9 @@ video {
 .mb-5 {
   margin-bottom: 1.25rem;
 }
+.mt-1 {
+  margin-top: 0.25rem;
+}
 .block {
   display: block;
 }
@@ -865,11 +868,15 @@ video {
 .w-64 {
   width: 16rem;
 }
+.w-min {
+  width: -moz-min-content;
+  width: min-content;
+}
+.w-1\/2 {
+  width: 50%;
+}
 .w-2\/3 {
   width: 66.666667%;
-}
-.w-3\/4 {
-  width: 75%;
 }
 .min-w-max {
   min-width: -moz-max-content;
@@ -1021,6 +1028,9 @@ video {
 .self-center {
   align-self: center;
 }
+.self-stretch {
+  align-self: stretch;
+}
 .overflow-auto {
   overflow: auto;
 }
@@ -1077,6 +1087,14 @@ video {
 .rounded-t-lg {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
+}
+.rounded-l-md {
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+}
+.rounded-r-md {
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
 }
 .rounded-tr-md {
   border-top-right-radius: 0.375rem;
@@ -1261,6 +1279,13 @@ video {
 }
 .bg-transparent {
   background-color: transparent;
+}
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+.bg-\[\#dfb253\]\/40 {
+  background-color: rgb(223 178 83 / 0.4);
 }
 .bg-\[url\(\'https\:\/\/uploads-ssl\.webflow\.com\/61cee5eb4d566d3471eca114\/61d2f2e602a2a8b328d55188_underline\%205\.svg\'\)\] {
   background-image: url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg');
@@ -1635,6 +1660,18 @@ video {
   --tw-text-opacity: 1;
   color: rgb(30 58 138 / var(--tw-text-opacity));
 }
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1724,17 +1761,23 @@ video {
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
 .line-clamp-3 {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
-.line-clamp-1 {
+.line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
 }
 .file\:mr-4::file-selector-button {
   margin-right: 1rem;
@@ -2007,6 +2050,11 @@ video {
   .md\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }
 @media (min-width: 1024px) {

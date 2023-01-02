@@ -27,6 +27,11 @@
           </a>
         </div>
         <div class="flex flex-col gap-2">
+          <% if (cart.noOfSpaces === 0) { %>
+            <p class="text-gray-400 mx-auto my-5 text-3xl font-serif font-bold">
+              Empty
+            </p>
+          <% } %> 
           <% for (const es of cart.eventSpaces) { %>
             <article class="flex gap-4 justify-between items-center py-2 font-sans text-xs sm:text-sm border-b relative">
               <a href="/dashboard/cart/delete/<%= es._id %>" class="text-[#a05231] font-spray bg-[#68b9d0] rounded-full text-2xl absolute right-1/2 left-1/2 w-max -top-5 px-2">&times;</a>
@@ -43,20 +48,6 @@
               </div>
             </article>
           <% } %> 
-        </div>
-        <div class="flex flex-col gap-2 mt-3">
-          <p class="flex justify-between gap-2 items-center">
-            <span class="font-serif font-bold text-lg sm:text-xl text-[#68b9d0]">Subtotal</span>
-            <span class="text-[#a05231] text-xl font-rubik"><%= cart.totalPrice %></span>
-          </p>
-          <p class="flex justify-between gap-2 items-center">
-            <span class="font-serif font-bold text-lg sm:text-xl text-[#68b9d0]">Discount</span>
-            <span class="text-[#a05231] text-xl font-rubik">$0.0</span>
-          </p>
-          <p class="flex justify-between gap-2 items-center">
-            <span class="font-serif font-bold text-lg sm:text-xl text-[#68b9d0]">Total</span>
-            <span class="text-[#a05231] text-xl font-rubik"><%= cart.totalPrice %></span>
-          </p>
         </div>
         <button class="uppercase text-sm sm:text-lg font-serif font-bold p-3 shadow-md bg-[#dfb253] text-[#136075] rounded-sm mt-3">Proceed to Checkout</button>
       </section>

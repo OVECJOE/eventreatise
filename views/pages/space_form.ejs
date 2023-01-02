@@ -217,9 +217,7 @@
                 class="outline-none p-2 rounded-md border-[#a05231]/50 border"
               />
             </p>
-            <p
-              class="flex flex-col gap-2 font-serif text-[#2a5c56] w-full grow"
-            >
+            <p class="flex flex-col gap-2 font-serif text-[#2a5c56] grow">
               <label for="address-field" class="text-md font-semibold">
                 Enter Space Address:
                 <span aria-label="required" class="font-rubik text-red-500"
@@ -234,6 +232,32 @@
                 class="outline-none p-2 rounded-md border-[#a05231]/50 border"
               />
             </p>
+            <div class="flex flex-col gap-2 font-serif text-[#2a5c56] grow">
+              <label for="currency-field" class="text-md font-semibold">
+                Enter Space Price:
+                <span aria-label="required" class="font-rubik text-red-500"
+                  >*</span
+                >
+              </label>
+              <div class="flex items-center rounded-md border-[#a05231]/50 border">
+                <select
+                  name="currency"
+                  id="currency-field"
+                  required
+                  class="py-2 self-stretch rounded-l-md outline-none bg-gray-200"
+                >
+                  <% for (const currency of locals.currencies) { %>
+                  <option value="<%= currency%>"><%= currency %></option>
+                  <% } %>
+                </select>
+                <input
+                  type="number"
+                  name="price"
+                  required
+                  class="p-2 grow outline-none rounded-r-md"
+                />
+              </div>
+            </div>
           </div>
           <div class="flex gap-3 justify-end">
             <button

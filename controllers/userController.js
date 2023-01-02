@@ -1,5 +1,6 @@
 // dependencies
 const { Country, State, City } = require('country-state-city')
+const { CurrencyCodes } = require("validator/lib/isISO4217")
 const { StatusCodes, getReasonPhrase } = require('http-status-codes')
 
 // models
@@ -110,7 +111,7 @@ exports.view_my_spaces = async (req, res) => {
 }
 
 exports.create_manager = async (req, res) => {
-  const { phoneNumber } = req.body
+  const { phoneNumber, bio } = req.body
   const { user } = req.session
 
   try {
@@ -123,7 +124,7 @@ exports.create_manager = async (req, res) => {
     const manager = await Manager.create({
       user: user._id,
       phoneNumber,
-      photo
+      photo, bio
     })
 
     // set the isManager to true
@@ -150,6 +151,7 @@ exports.show_eventspace_form = async (req, res) => {
     countries: Country.getAllCountries(),
     states: State.getAllStates(),
     cities: City.getAllCities(),
+    currencies: CurrencyCodes,
     categories: null
   }
 
@@ -196,7 +198,8 @@ exports.create_space = async (req, res) => {
   if (formType === 'space') {
     const {
       name, category, desc, country,
-      state, city, postalCode, address
+      state, city, postalCode, address,
+      price, currency
     } = req.body
 
     // data for the creation of the event space
@@ -204,6 +207,10 @@ exports.create_space = async (req, res) => {
       photos: [], // list of photos of event spaces
       name, desc,
       category: category.replace(' ', ''),
+      price: {
+        currency,
+        value: price
+      }
     }
 
     try {

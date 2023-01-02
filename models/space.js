@@ -1,6 +1,5 @@
 // dependencies
 const mongoose = require('mongoose')
-const { isCurrency } = require('validator')
 
 const Schema = mongoose.Schema
 const { ObjectId } = Schema.Types
@@ -45,8 +44,7 @@ const EventSpace = Schema({
   price: {
     currency: {
       type: String,
-      required: false,
-      default: '$'
+      required: [true, 'Provide the appropriate currency for this transaction!'],
     },
     value: { type: Number, default: 0 }
   },
@@ -64,7 +62,7 @@ const EventSpace = Schema({
   virtuals: {
     rentPrice: {
       get() {
-        return `${this.price.currency}${this.price.value}`
+        return `${this.price.currency} ${this.price.value}`
       }
     }
   }
