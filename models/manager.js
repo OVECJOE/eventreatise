@@ -21,16 +21,21 @@ const Manager = new Schema({
   bio: {
     type: String,
     required: [true, 'Please enter your bio'],
-    maxLength: 200,
+    maxLength: 500,
     trim: true
   },
   photo: { type: String, trim: true },
+  stripeCustomerID: {
+    type: String,
+    unique: [true, 'Customer ID provided for manager\'s account must be unique!']
+  },
   eventSpaces: [
     { type: ObjectId, ref: 'EventSpace' }
   ],
   followers: [
     { type: ObjectId, ref: 'User' }
-  ]
+  ],
+  cardDetails: { type: ObjectId, ref: 'ManagerCard' },
 }, { timestamps: { createdAt: 'joined', updatedAt: 'lastLogin' } })
 
 module.exports = mongoose.model('Manager', Manager)

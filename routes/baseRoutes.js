@@ -16,5 +16,7 @@ router.route('/login')
   .post(baseController.login)
 // logout view
 router.get('/logout', ensureLoggedIn, baseController.logout)
+// view pricing
+router.get('/pricing', baseController.view_pricing)
 
 module.exports = router

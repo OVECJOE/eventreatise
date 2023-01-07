@@ -15,6 +15,7 @@ const Cart = require('../models/cart')
 const processImg = require('../utils/Imageprocess')
 const likeOrDislike = require('../utils/likeOrDislike')
 const clearStatusMsg = require('../utils/clearStatusMessage')
+const stripe = require('../utils/stripe')
 
 // get the message global
 const { message } = require('../utils/globals')
@@ -124,8 +125,19 @@ exports.create_manager = async (req, res) => {
     const manager = await Manager.create({
       user: user._id,
       phoneNumber,
-      photo, bio
+      photo, bio,
     })
+
+    // create a stripe customer
+    const customer = await stripe.customers.create({
+      email: user.email
+    }, {
+      apiKey: process.env.STRIPE_SECRET_KEY
+    })
+
+    // add stripe customer to manager model
+    manager.stripeCustomerID = customer.id
+    await manager.save()
 
     // set the isManager to true
     req.session.user = await User.findByIdAndUpdate(user._id,
@@ -522,4 +534,74 @@ exports.delete_cart = async (req, res) => {
 
   // redirect to cart
   return res.redirect('/dashboard/cart')
+}
+
+exports.view_profile = async (req, res) => {
+  const { user } = req.session
+
+  // data to be sent to client
+  const context = {
+    user,
+    manager: null
+  }
+
+  // set feedback message and clear global message
+  clearStatusMsg(message, context)
+
+  try {
+    if (user.isManager) {
+      const manager = await Manager.findOne({ user: user._id })
+        .populate('followers').exec()
+
+      if (!manager.isVerified) {
+        message.body = `Verified managers have higher chances of gaining customers\'s trust, ${user.fullName}.`
+        message.status = StatusCodes.NOT_ACCEPTABLE
+      }
+
+      context.manager = manager
+    }
+  } catch (err) {
+    message.body = err.message
+    message.status = StatusCodes.BAD_REQUEST
+
+    // redirect back to this page
+    return res.redirect('/dashboard/profile')
+  }
+
+  return res.render('pages/profile', context)
+}
+
+exports.view_followers = async (req, res) => {
+  const { user } = req.session
+
+  try {
+    const manager = await Manager.findOne({ user: user._id })
+      .populate('followers').exec()
+
+    // send back JSON
+    return res.send(manager.followers)
+  } catch (err) {
+    message.body = err.message
+    message.status = StatusCodes.BAD_REQUEST
+
+    // redirect back to profile page
+    return res.send(message)
+  }
+}
+
+exports.view_following = async (req, res) => {
+  const { user } = req.session
+
+  try {
+    const userData = await User.findById(user._id).populate('following').exec()
+
+    // send back the user data
+    return res.send(userData.following)
+  } catch (err) {
+    message.body = err.message
+    message.status = StatusCodes.BAD_REQUEST
+
+    // redirect back to the profile page
+    return res.send(message)
+  }
 }

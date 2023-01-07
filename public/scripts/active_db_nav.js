@@ -9,8 +9,8 @@ const activateNavLink = (e) => {
     const { href } = navLink.querySelector('a')
 
     // style the list item if href is equal to window url
-    if (href === window.location.href) {
-      navLink.classList.add('text-[#a05231]', 'bg-white', 'rounded-full')
+    if (location.href === href) {
+      navLink.classList.add('bg-[#a05231]', 'rounded-full')
       navLink.querySelector('a').href = '#'
     }
   })

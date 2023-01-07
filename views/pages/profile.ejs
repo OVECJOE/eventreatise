@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', { title: 'My Profile' }) %>
+  <body class="flex relative bg-fuchsia-500/5">
+    <%- include('../partials/side_menu') %>
+    <main
+      class="flex relative flex-col gap-5 grow min-h-screen mb-5 md:p-5 max-w-6xl mx-auto overflow-y-auto"
+    >
+      <%- include('../partials/msg_toast') %> <% if (locals.manager) { %>
+      <header
+        class="bg-[url('/assets/profile_bg.jpg')] bg-cover min-h-max pt-4 md:rounded-md"
+      >
+        <div
+          class="relative font-serif text-[#a05231] flex flex-col justify-center py-2 px-5 items-center gap-1 mx-auto w-max"
+        >
+          <img
+            src="<%= manager.photo %>"
+            alt="<%= user.username %>"
+            class="w-28 h-28 object-cover rounded-full border-2 border-[#a05231]"
+          />
+          <h3 class="text-xl font-extrabold bg-white/5 uppercase">
+            <%= user.fullName %>
+          </h3>
+          <p class="font-mono font-light text-sm text-black/40">
+            @<%= user.username %>
+          </p>
+          <% if (manager.isVerified) { %>
+          <span
+            class="md:absolute md:top-5 font-rubik md:-right-24 text-green-100 px-2 rounded-full bg-green-900"
+            >Verified</span
+          >
+          <% } else { %>
+          <span
+            class="md:absolute md:top-5 md:-right-24 font-rubik text-red-100 px-2 rounded-full bg-red-900"
+            >Not Verified</span
+          >
+          <% } %>
+        </div>
+        <p
+          id="profile-navbar"
+          class="bg-[#dfb253]/50 md:rounded-b-md overflow-x-auto py-4 text-center whitespace-nowrap w-full font-serif font-extrabold text-sm text-[#a05231]"
+        >
+          <span
+            class="text-center bg-white p-2 shadow-md whitespace-nowrap mx-1"
+          >
+            <a href="/dashboard/profile">Basic Info</a>
+          </span>
+          <span
+            class="text-center bg-white p-2 shadow-md whitespace-nowrap mx-1"
+          >
+            <a href="/dashboard/profile/followers">Followers</a>
+          </span>
+          <span
+            class="text-center bg-white p-2 shadow-md whitespace-nowrap mx-1"
+          >
+            <a href="/dashboard/profile/following">Following</a>
+          </span>
+          <span
+            class="text-center bg-white p-2 shadow-md whitespace-nowrap mx-1"
+          >
+            <a href="/dashboard/profile/card_details">Credit/Debit Card</a>
+          </span>
+        </p>
+      </header>
+      <% } else { %>
+      <div class="p-2 shadow-lg m-1 bg-black rounded-sm">
+        <h1
+          class="py-2 text-2xl uppercase font-spray text-[#dfb253] text-center"
+        >
+          My Profile
+        </h1>
+        <p
+          class="text-[#136075] font-sans text-center text-sm uppercase font-bold"
+        >
+          <%= user.following.length %> Following
+        </p>
+      </div>
+      <% } %>
+      <div id="dynamic-box">
+        <form
+          method="post"
+          class="flex flex-wrap items-center gap-3 w-full bg-white rounded-sm p-2 shadow-md"
+        >
+          <div class="flex flex-col gap-1 text-[#136075] font-serif grow">
+            <label for="firstname-field" class="text-sm font-bold md:text-xl"
+              >First Name:</label
+            >
+            <input
+              type="text"
+              id="firstname-field"
+              name="firstName"
+              value="<%= user.firstName %>"
+              readonly
+              class="font-spray p-2 rounded-sm bg-[#dfb253]/50 text-[#a05231] outline-none"
+            />
+          </div>
+          <div class="flex flex-col gap-1 text-[#136075] font-serif grow">
+            <label for="lastname-field" class="text-sm font-bold md:text-xl"
+              >Last Name:</label
+            >
+            <input
+              type="text"
+              id="lastname-field"
+              name="lastName"
+              value="<%= user.lastName %>"
+              readonly
+              class="font-spray p-2 rounded-sm bg-[#dfb253]/50 text-[#a05231] outline-none"
+            />
+          </div>
+          <div class="flex flex-col gap-1 text-[#136075] font-serif grow">
+            <label for="email-field" class="text-sm font-bold md:text-xl"
+              >Email:</label
+            >
+            <input
+              type="email"
+              id="email-field"
+              name="email"
+              value="<%= user.email %>"
+              readonly
+              class="font-spray p-2 rounded-sm bg-[#dfb253]/50 text-[#a05231] outline-none"
+            />
+          </div>
+          <div class="flex flex-col gap-1 text-[#136075] font-serif grow">
+            <label for="joined-field" class="text-sm font-bold md:text-xl"
+              >Joined:</label
+            >
+            <input
+              type="datetime"
+              id="joined-field"
+              name="joined"
+              value="<%= user.joined %>"
+              readonly
+              class="font-spray p-2 rounded-sm bg-[#dfb253]/50 text-[#a05231] outline-none"
+            />
+          </div>
+          <div class="flex flex-col gap-1 text-[#136075] font-serif grow">
+            <label for="lastlogin-field" class="text-sm font-bold md:text-xl"
+              >Last Login:</label
+            >
+            <input
+              type="datetime"
+              id="lastlogin-field"
+              name="lastLogin"
+              value="<%= user.lastLogin %>"
+              readonly
+              class="font-spray p-2 rounded-sm bg-[#dfb253]/50 text-[#a05231] outline-none"
+            />
+          </div>
+          <% if (manager) { %>
+          <div class="flex flex-col gap-1 text-[#136075] font-serif grow">
+            <label for="phoneno-field" class="text-sm font-bold md:text-xl"
+              >Phone Number:</label
+            >
+            <input
+              type="tel"
+              id="phoneno-field"
+              name="phoneNumber"
+              readonly
+              value="<%= manager.phoneNumber %>"
+              class="w-full font-spray p-2 rounded-sm bg-[#dfb253]/50 text-[#a05231] outline-none"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-1 text-[#136075] font-serif grow w-full"
+          >
+            <label for="bio-field" class="text-sm font-bold md:text-xl"
+              >Bio:</label
+            >
+            <textarea
+              id="bio-field"
+              name="bio"
+              rows="5"
+              readonly
+              class="w-full font-spray p-2 rounded-sm bg-[#dfb253]/50 text-[#a05231] outline-none"
+            >
+            <%= manager.bio %></textarea
+            >
+          </div>
+          <% } %>
+        </form>
+      </div>
+      <% if (manager && !manager.isVerified) { %>
+      <section
+        class="bg-gradient-to-br mx-1 p-3 from-[#136075] to-[#68b9d0] flex flex-col gap-5 shadow-md rounded-lg"
+      >
+        <div>
+          <h2 class="text-2xl font-serif text-white uppercase">
+            Verify your Account
+          </h2>
+          <p class="text-[#dfb253] md:text-xl font-serif px-2 bg-black">
+            Choose a subscription plan and unlock the benefits of a verified and
+            recognized manager.
+          </p>
+        </div>
+        <div class="flex gap-4 text-xs sm:text-lg">
+          <a
+            href="/pricing#subscription-plans"
+            class="bg-[#a05231] text-white text-center px-3 py-2 font-mono shadow-lg"
+          >
+            Subscribe
+          </a>
+          <a
+            href="/pricing"
+            class="bg-white text-[#a05231] text-center font-mono px-3 py-2 shadow-lg"
+            >Learn More</a
+          >
+        </div>
+      </section>
+      <% } %>
+      <div
+        class="absolute left-0 right-0 bottom-0 text-red-600 bg-red-200"
+        id="err-card"
+      ></div>
+    </main>
+    <script src="/scripts/profile.js" defer></script>
+  </body>
+</html>

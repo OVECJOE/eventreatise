@@ -31,5 +31,11 @@ router.get('/cart', ensureLoggedIn, userController.view_cart)
 router.get('/cart/delete/:spaceId', ensureLoggedIn, userController.delete_cart_item)
 // delete cart
 router.get('/cart/delete', userController.delete_cart)
+// view user's profile
+router.get('/profile', ensureLoggedIn, userController.view_profile)
+// view your followers
+router.get('/profile/followers', ensureLoggedIn, userController.view_followers)
+// view your following
+router.get('/profile/following', ensureLoggedIn, userController.view_following)
 
 module.exports = router

@@ -11,9 +11,11 @@ const app = express()
 // port number
 const PORT = process.env.PORT ?? 8080
 // base routes
-const baseRoutes = require('./routes/baseRoutes.js')
+const baseRoutes = require('./routes/baseRoutes')
 // user dashboard routes
 const userRoutes = require('./routes/userRoutes')
+// subscriptions routes
+const subsRoutes = require('./routes/subsRoutes')
 
 // set up middlewares
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -34,6 +36,7 @@ app.set('view engine', 'ejs')
 // defining routes
 app.use('/', baseRoutes),
 app.use('/dashboard', userRoutes)
+app.use('/subscriptions', subsRoutes)
 
 // server listening
 app.listen(PORT, () => {

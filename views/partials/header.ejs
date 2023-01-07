@@ -2,9 +2,9 @@
   <div class="flex w-full flex-row justify-around items-center pb-3 px-2 py-4">
     <%- include('./logo') %>
     <a
-      href="/signup"
+      href="<%= locals.user ? '/dashboard' : '/signup' %> "
       class="bg-[#dfb253] text-white font-semibold px-5 py-2 rounded-lg"
-      >Signup</a
+      ><%= locals.user ? 'Dashboard' : 'Signup' %></a
     >
   </div>
   <nav class="w-full font-semibold text-[#227791]">

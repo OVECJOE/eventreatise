@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', {title: 'Pricing'}); %>
+  <body class="bg-fuchsia-100/10">
+    <%- include('../partials/msg_toast') %> <%- include('../partials/header') %>
+    <main class="flex flex-col font-serif">
+      <p
+        class="py-0.5 px-2 bg-[#c65525] text-white text-center animate-pulse font-serif text-sm"
+      >
+        This page is focused on managers alone...
+      </p>
+      <section class="flex flex-col gap-2 items-center justify-around">
+        <div
+          class="flex items-center py-3 bg-white text-black justify-between flex-col md:flex-row bg-[url('https://uploads-ssl.webflow.com/61cee5eb4d566d3471eca114/61d2f2e602a2a8b328d55188_underline%205.svg')] bg-no-repeat bg-contain bg-bottom"
+        >
+          <article class="w-full md:w-1/2 flex flex-col gap-3 py-5 px-3">
+            <div>
+              <h1
+                class="font-rubik text-5xl md:text-7xl uppercase text-[#227791]"
+              >
+                Pricing
+              </h1>
+            </div>
+            <p class="font-semibold text-2xl 2xl:w-10/12 xl:text-4xl leading-8">
+              As a
+              <span class="underline text-[#227791] capitalize">manager</span>,
+              one important step you can take to make your business a
+              skyrocketter is
+              <span class="underline text-[#227791] capitalize"
+                >verification</span
+              >. To verify your manager's account, you must associate yourself
+              to one of
+              <span class="underline text-[#227791] capitalize"
+                >our subscription plans below</span
+              >.
+            </p>
+          </article>
+          <img
+            src="/assets/approved.png"
+            alt="Approved and Verified"
+            class="w-full mx-auto md:w-1/2"
+          />
+        </div>
+        <div
+          class="bg-[#dfb253] text-white py-5 px-3 flex flex-col md:flex-row items-center rounded-t-full md:rounded-t-none"
+        >
+          <div
+            class="md:w-1/2 flex flex-col gap-1 xl:w-10/12 xl:mx-auto p-3 text-[#227791] font-bold items-center text-center"
+          >
+            <p class="uppercase text-lg font-mono">
+              How Does Account Verification Boost My Business?
+            </p>
+            <p class="text-5xl font-rubik font-extrabold rotate-90 md:rotate-0">
+              &rArr;
+            </p>
+          </div>
+          <article class="grid grid-cols-2 grid-rows-2 gap-2 md:w-1/2 p-3">
+            <div
+              class="flex flex-col gap-1 text-center justify-around p-2 rounded-xl items-center bg-[#c65525]"
+            >
+              <img
+                src="/assets/trending.png"
+                alt="Increased Views on Posts"
+                width="60px"
+                height="60px"
+                class="object-contain rounded-full"
+              />
+              <p class="text-xs md:text-lg xl:text-xl font-serif uppercase">
+                Boost the Views on Your Event Spaces via Inclusion into the
+                Trending Event Spaces
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-1 text-center justify-around p-2 rounded-xl items-center bg-[#c65525]"
+            >
+              <img
+                src="/assets/no_hidden_fees.png"
+                alt="Removal of hidden fees during customers' orders"
+                width="60px"
+                height="60px"
+                class="object-contain rounded-full"
+              />
+              <p class="text-xs md:text-lg xl:text-xl font-serif uppercase">
+                No Hidden Fee During a Customer's Order
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-1 text-center justify-around p-2 rounded-xl items-center bg-[#c65525]"
+            >
+              <img
+                src="/assets/mentorship.png"
+                alt="Access to Eventreatise Mentorship Program"
+                width="60px"
+                height="60px"
+                class="object-contain rounded-full"
+              />
+              <p class="text-xs md:text-lg xl:text-xl font-serif uppercase">
+                Free Access to our Mentorship Programs
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-1 text-center justify-around p-2 rounded-xl items-center bg-[#c65525]"
+            >
+              <img
+                src="/assets/customers_trust.gif"
+                alt="Building better customers' relationship"
+                width="60px"
+                height="60px"
+                class="object-contain rounded-full"
+              />
+              <p class="text-xs md:text-lg xl:text-xl font-serif uppercase">
+                Boost Customers' Trust in You
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="bg-black p-4 flex flex-col">
+        <div class="text-center">
+          <h2
+            class="p-2 text-2xl md:text-4xl font-bold uppercase text-[#227791]"
+          >
+            Our Subscription Plans
+          </h2>
+          <span
+            class="bg-white px-2 shadow-xl shadow-[#c65525] font-rubik text-lg text-[#c65525]"
+            >Let's Get You Verified!</span
+          >
+        </div>
+        <div
+          class="flex flex-row-reverse gap-5 my-10 items-center justify-center flex-wrap"
+          id="subscription-plans"
+        ></div>
+        <% if (!locals.user) { %>
+        <a
+          href="/login"
+          class="bg-[#c65525] self-center rounded-full font-mono text-lg md:text-3xl py-2 px-5 shadow-lg text-white my-3"
+        >
+          <%= !locals.user && 'Login' %>
+        </a>
+        <% } %>
+      </section>
+    </main>
+    <%- include('../partials/footer') %>
+    <script src="/scripts/pricing.js"></script>
+  </body>
+</html>

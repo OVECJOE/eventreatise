@@ -1,13 +1,16 @@
 // dependencies
+const { StatusCodes } = require('http-status-codes')
+
 const { message } = require('../utils/globals')
 const User = require('../models/user')
 const clearStatusMsg = require('../utils/clearStatusMessage')
-const { StatusCodes } = require('http-status-codes')
+const Manager = require('../models/manager')
 
 // serve homepage controller
 exports.index = async (req, res) => {
   const context = {
-    message: null
+    message: null,
+    user: req.session.user
   }
   
   // set and clear message
@@ -106,4 +109,30 @@ exports.logout = (req, res) => {
   }
 
   res.redirect('/')
+}
+
+exports.view_pricing = async (req, res) => {
+  const { user } = req.session
+
+  // data to be sent to the client
+  const context = {
+    user,
+    manager: null
+  }
+
+  // set and clear feedback message
+  clearStatusMsg(message, context)
+
+  try {
+    if (user) {
+      context.manager = await Manager.findOne({ user: user._id })
+      .populate('cardDetails').exec()
+    }
+  } catch (err) {
+    message.body = err.message
+    message.status = StatusCodes.BAD_REQUEST
+  }
+
+  // render pricing page
+  return res.render('pages/pricing', context)
 }
