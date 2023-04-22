@@ -2,7 +2,7 @@ require('dotenv').config()
 require('./config/db_config').connect()
 const express = require('express')
 const bodyParser = require('body-parser') // parser middleware
-const session = require('express-session') // session middleware
+const session = require('cookie-session') // session middleware
 const path = require('path')
 
 // initialize server

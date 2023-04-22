@@ -11,7 +11,9 @@ const uploadPhoto = (dirname) => {
   // create folder if it doesn't exist
   fs.access(`uploads/${dirname}`, err => {
     if (err) {
-      fs.mkdirSync(`uploads/${dirname}`)
+      fs.mkdirSync(`uploads/${dirname}`, {
+        recursive: true
+      })
     }
   })
   return upload
